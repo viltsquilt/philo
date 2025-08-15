@@ -6,8 +6,36 @@
 #    By: vahdekiv <vahdekiv@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/14 15:45:37 by vahdekiv          #+#    #+#              #
-#    Updated: 2025/08/14 15:53:27 by vahdekiv         ###   ########.fr        #
+#    Updated: 2025/08/15 11:50:12 by vahdekiv         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
+NAME = philo
+CC = cc
+CFLAGS = -Wall -Wextra -Werror -g
+SRCS = main.c struct_init.c philo_utils.c error_handling.c
 
+O_DIR = objects
+
+OBJS = $(addprefix $(O_DIR)/,$(SRCS:.c=.o))
+
+all: $(NAME)
+
+$(NAME): $(OBJS)
+		@$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
+
+$(O_DIR):
+		mkdir -p $@
+
+$(O_DIR)/%.o: %.c philo.h | $(O_DIR)
+		$(CC) $(CFLAGS) -c $< -o $@
+
+clean:
+		@rm -rf $(O_DIR)
+
+fclean: clean
+		@rm -f $(NAME)
+
+re: fclean all
+
+.PHONY: all clean fclean re

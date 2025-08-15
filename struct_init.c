@@ -6,13 +6,13 @@
 /*   By: vahdekiv <vahdekiv@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/14 14:38:54 by vahdekiv          #+#    #+#             */
-/*   Updated: 2025/08/14 15:03:51 by vahdekiv         ###   ########.fr       */
+/*   Updated: 2025/08/15 11:54:15 by vahdekiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	intialise_struct(char **argv, t_philo *philo)
+void	initialise_struct(char **argv, t_philo *philo)
 {
 	philo->num_of_philos = ft_atosize_t(argv[1]);
 	if (philo->num_of_philos == 0)
@@ -39,21 +39,21 @@ size_t	ft_atosize_t(char *arg)
 	i = 0;
 	start = 0;
 	res = 0;
-	while ((arg[i] >= 9 && arg[i] <= 13) || argv[i] == 32)
+	while ((arg[i] >= 9 && arg[i] <= 13) || arg[i] == 32)
 		i++;
 	if (arg[i] == '\0')
 		error_and_exit("Error\nArgument invalid");
 	start = i;
 	while (arg[i])
 	{
-		if (ft_isdigit(arg[i] == 1)
+		if (ft_isdigit(arg[i]) == 1)
 			error_and_exit("Error\nArgument must be positive");
 		i++;
 	}
 	while (arg[start])
 	{
-		res = res * (arg[start] - '0')
+		res = res * 10 + (arg[start] - '0');
 		start++;
 	}
-	return (start);
+	return (res);
 }

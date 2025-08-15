@@ -6,7 +6,7 @@
 /*   By: vahdekiv <vahdekiv@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/14 13:58:02 by vahdekiv          #+#    #+#             */
-/*   Updated: 2025/08/14 15:07:24 by vahdekiv         ###   ########.fr       */
+/*   Updated: 2025/08/15 13:39:23 by vahdekiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,25 @@ int	main (int argc, char **argv)
 {
 	t_philo	philo;
 
-	if (argc != 5 || argc != 6)
+	if (argc < 5 || argc > 6)
 	{
 		write(1, "Error\nInvalid number of arguments", 33);
 		return (1);
 	}
 	initialise_struct(argv, &philo);
+	printf("Philos: %zu\n", philo.num_of_philos);
+	printf("Time to die: %zu\n", philo.time_to_die);
+	printf("Time to eat: %zu\n", philo.time_to_eat);
+	printf("Time to sleep: %zu\n", philo.time_to_sleep);
+	printf("Number of times to eat: %zu\n", philo.num_times_to_eat);
+	return (0);
 }
+
+//function to monitor philosophers
+	//loop for checking which philosopher ate last
+//function to assess priority i.e. which philosopher has waited longest
+//ft_usleep function
+//eating function
 
 /*
 
@@ -50,4 +62,20 @@ Start with parsing:
 	to eat (edge case)
 - Use structs
 
+Logic:
+- Need a monitor, some function that checks on each philosopher and monitors
+	situation
+- Need priority logic, so that the philo who has not eaten in the longeest time
+	is prioritised
+
+Functions :
+- usleep
+- gettimeofday
+- pthread_create
+- pthread_detach
+- pthread_join
+- pthread_mutex_init (initialise the mutex)
+- pthread_mutex_destroy (free the mutex)
+- pthread_mutex_lock (lock a process)
+- pthread_mutex_unlock (unlock a process)
 */
