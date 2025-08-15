@@ -6,13 +6,13 @@
 /*   By: vahdekiv <vahdekiv@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/14 13:58:02 by vahdekiv          #+#    #+#             */
-/*   Updated: 2025/08/15 13:39:23 by vahdekiv         ###   ########.fr       */
+/*   Updated: 2025/08/15 14:39:15 by vahdekiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	main (int argc, char **argv)
+int	main(int argc, char **argv)
 {
 	t_philo	philo;
 
@@ -22,12 +22,25 @@ int	main (int argc, char **argv)
 		return (1);
 	}
 	initialise_struct(argv, &philo);
+	eating(philo);
 	printf("Philos: %zu\n", philo.num_of_philos);
 	printf("Time to die: %zu\n", philo.time_to_die);
 	printf("Time to eat: %zu\n", philo.time_to_eat);
 	printf("Time to sleep: %zu\n", philo.time_to_sleep);
 	printf("Number of times to eat: %zu\n", philo.num_times_to_eat);
 	return (0);
+}
+
+void	eating(t_philo *philo)
+{
+	//must hold two forks
+	//to avoid fork duplication, mutex forks
+	//must sleep after eating
+}
+
+int	monitoring(t_philo *philo)
+{
+	philo->starving_philo = get_hungriest(philo);
 }
 
 //function to monitor philosophers

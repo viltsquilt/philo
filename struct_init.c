@@ -6,7 +6,7 @@
 /*   By: vahdekiv <vahdekiv@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/14 14:38:54 by vahdekiv          #+#    #+#             */
-/*   Updated: 2025/08/15 11:54:15 by vahdekiv         ###   ########.fr       */
+/*   Updated: 2025/08/15 14:29:41 by vahdekiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,18 @@
 
 void	initialise_struct(char **argv, t_philo *philo)
 {
+	size_t	i;
+
+	i = 0;
 	philo->num_of_philos = ft_atosize_t(argv[1]);
 	if (philo->num_of_philos == 0)
 		error_and_exit("Error\nArgument must be above zero\n");
+	philo->id = malloc(philo->num_of_philos * (sizeof(int)));
+	while (i < philo->num_of_philos)
+	{
+		philo->id[i] = i + 1;
+		i++;
+	}
 	philo->time_to_die = ft_atosize_t(argv[2]);
 	if (philo->time_to_die == 0)
 		error_and_exit("Error\nArgument must be above zero\n");
@@ -28,32 +37,4 @@ void	initialise_struct(char **argv, t_philo *philo)
 		error_and_exit("Error\nArgument must be above zero\n");
 	if (argv[5])
 		philo->num_times_to_eat = ft_atosize_t(argv[5]);
-}
-
-size_t	ft_atosize_t(char *arg)
-{
-	size_t	i;
-	size_t	start;
-	size_t	res;
-
-	i = 0;
-	start = 0;
-	res = 0;
-	while ((arg[i] >= 9 && arg[i] <= 13) || arg[i] == 32)
-		i++;
-	if (arg[i] == '\0')
-		error_and_exit("Error\nArgument invalid");
-	start = i;
-	while (arg[i])
-	{
-		if (ft_isdigit(arg[i]) == 1)
-			error_and_exit("Error\nArgument must be positive");
-		i++;
-	}
-	while (arg[start])
-	{
-		res = res * 10 + (arg[start] - '0');
-		start++;
-	}
-	return (res);
 }
