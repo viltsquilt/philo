@@ -6,7 +6,7 @@
 /*   By: vahdekiv <vahdekiv@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/14 14:38:54 by vahdekiv          #+#    #+#             */
-/*   Updated: 2025/08/15 14:29:41 by vahdekiv         ###   ########.fr       */
+/*   Updated: 2025/10/27 12:35:59 by vahdekiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,13 @@ void	initialise_struct(char **argv, t_philo *philo)
 {
 	size_t	i;
 
-	i = 0;
+	i = -1;
 	philo->num_of_philos = ft_atosize_t(argv[1]);
 	if (philo->num_of_philos == 0)
 		error_and_exit("Error\nArgument must be above zero\n");
-	philo->id = malloc(philo->num_of_philos * (sizeof(int)));
-	while (i < philo->num_of_philos)
-	{
+	philo->id = safe_malloc(sizeof(int) * philo->num_of_philos);
+	while (++i < philo->num_of_philos)
 		philo->id[i] = i + 1;
-		i++;
-	}
 	philo->time_to_die = ft_atosize_t(argv[2]);
 	if (philo->time_to_die == 0)
 		error_and_exit("Error\nArgument must be above zero\n");

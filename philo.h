@@ -6,7 +6,7 @@
 /*   By: vahdekiv <vahdekiv@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/15 11:21:05 by vahdekiv          #+#    #+#             */
-/*   Updated: 2025/08/15 14:39:43 by vahdekiv         ###   ########.fr       */
+/*   Updated: 2025/10/27 14:04:03 by vahdekiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,18 @@
 # include <stdio.h>
 # include <sys/time.h>
 # include <pthread.h>
+# include <errno.h>
+
+typedef enum e_opcode
+{
+	INIT,
+	LOCK,
+	JOIN,
+	DETACH,
+	CREATE,
+	DESTROY,
+	UNLOCK
+}	t_opcode;
 
 typedef struct s_philo
 {
