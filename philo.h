@@ -6,7 +6,7 @@
 /*   By: vahdekiv <vahdekiv@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/15 11:21:05 by vahdekiv          #+#    #+#             */
-/*   Updated: 2025/10/28 13:08:52 by vahdekiv         ###   ########.fr       */
+/*   Updated: 2025/10/28 17:31:47 by vahdekiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,15 @@
 # include <pthread.h>
 # include <errno.h>
 # include <stdbool.h>
+# include <limits.h>
+
+# define MAX_PHILOS 200
 
 typedef struct s_table t_table;
 
 typedef pthread_mutex_t t_mtx;
 
-typedef enum e_opcode
+typedef enum e_code
 {
 	INIT,
 	LOCK,
@@ -35,7 +38,7 @@ typedef enum e_opcode
 	CREATE,
 	DESTROY,
 	UNLOCK
-}	t_opcode;
+}	t_code;
 
 typedef struct s_fork;
 {
@@ -75,5 +78,7 @@ long	ft_atol(char *arg);
 size_t	get_current_time(void);
 void	parse_input(char **argv, t_philo *philo);
 void	error_and_exit(char *msg);
+void	*safe_malloc(size_t bytes);
+void	safe_mutex(t_mtx *mutex, t_code code);
 
 #endif
