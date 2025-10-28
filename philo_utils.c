@@ -6,7 +6,7 @@
 /*   By: vahdekiv <vahdekiv@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/14 15:04:11 by vahdekiv          #+#    #+#             */
-/*   Updated: 2025/08/15 14:41:10 by vahdekiv         ###   ########.fr       */
+/*   Updated: 2025/10/28 12:50:31 by vahdekiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,30 +38,41 @@ int	ft_usleep(size_t milliseconds)
 	return (0);
 }
 
-size_t	ft_atosize_t(char *arg)
+static const char	*valid_input(const char *arg)
 {
-	size_t	i;
-	size_t	start;
-	size_t	res;
+	int			len;
+	const char	*num;
+
+	len = 0;
+	while ((*arg >= 9 && *arg <= 13) || *arg == 32)
+		arg++;
+	if (*arg == '\0')
+		error_and_exit("Error\nArgument invalid");
+	while (*arg == '+')
+		arg++;
+	if (*arg == '-')
+		error_and_exit("Error\nArgument invalid");
+	if (ft_isdigit(*arg) == 1)
+		error_and_exit("Error\nArgument invalid");
+	num = arg;
+	while (ft_isdigit(*arg++) == 0)
+		len++;
+	if (len > 10)
+		error_and_exit("Error\nArgument too large");
+	return (num);
+}
+
+long	ft_atol(const char *arg)
+{
+	long	res;
+	int		i;
 
 	i = 0;
-	start = 0;
 	res = 0;
-	while ((arg[i] >= 9 && arg[i] <= 13) || arg[i] == 32)
-		i++;
-	if (arg[i] == '\0')
-		error_and_exit("Error\nArgument invalid");
-	start = i;
-	while (arg[i])
-	{
-		if (ft_isdigit(arg[i]) == 1)
-			error_and_exit("Error\nArgument must be positive");
-		i++;
-	}
-	while (arg[start])
-	{
-		res = res * 10 + (arg[start] - '0');
-		start++;
-	}
+	arg = valid_input(arg);
+	while (ft_isdigit(arg[i]) == 0)
+		res = res * 10 + (arg[i++] - '0');
+	if (res >= INT_MAX)
+		error_and_exit("Error\nArgument too large");
 	return (res);
 }

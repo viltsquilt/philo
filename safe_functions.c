@@ -6,7 +6,7 @@
 /*   By: vahdekiv <vahdekiv@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 12:21:57 by vahdekiv          #+#    #+#             */
-/*   Updated: 2025/10/27 14:01:22 by vahdekiv         ###   ########.fr       */
+/*   Updated: 2025/10/28 13:05:28 by vahdekiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,4 +21,3 @@ void	*safe_malloc(size_t bytes)
 		error_and_exit("Malloc failure\n");
 	return (ret);
 }
-

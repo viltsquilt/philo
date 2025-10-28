@@ -6,7 +6,7 @@
 /*   By: vahdekiv <vahdekiv@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/15 11:31:38 by vahdekiv          #+#    #+#             */
-/*   Updated: 2025/08/15 11:34:24 by vahdekiv         ###   ########.fr       */
+/*   Updated: 2025/10/28 13:04:17 by vahdekiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,5 @@ void	error_and_exit(char	*msg)
 		write(1, &msg[i], 1);
 		i++;
 	}
-	exit (1);
+	exit (EXIT_FAILURE);
 }
