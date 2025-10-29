@@ -6,7 +6,7 @@
 /*   By: vahdekiv <vahdekiv@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 12:21:57 by vahdekiv          #+#    #+#             */
-/*   Updated: 2025/10/28 17:30:53 by vahdekiv         ###   ########.fr       */
+/*   Updated: 2025/10/29 12:27:28 by vahdekiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	*safe_malloc(size_t bytes)
 	return (ret);
 }
 
-static void mutex_error_wrapper(int status)
+static void mutex_wrapper(int status)
 {
 	if (status == 0)
 		return ;
@@ -33,9 +33,9 @@ static void mutex_error_wrapper(int status)
 void	safe_mutex(t_mtx *mutex, t_code code)
 {
 	if (code == LOCK)
-		mutex_wrapper(pthread_mutex_lock(mutex))
+		mutex_wrapper(pthread_mutex_lock(mutex));
 	else if (code == UNLOCK)
-		mutex_wrapper(pthread_mutex_unlock(mutex))
+		mutex_wrapper(pthread_mutex_unlock(mutex));
 	else if (code == INIT)
 		mutex_wrapper(pthread_mutex_init(mutex, NULL));
 	else if (code == DESTROY)
@@ -44,7 +44,7 @@ void	safe_mutex(t_mtx *mutex, t_code code)
 		error_and_exit("Wrong mutex code used\n");
 }
 
-static void	thread_error_wrapper(int status)
+static void	thread_wrapper(int status)
 {
 	if (status == 0)
 		return ;
@@ -56,11 +56,11 @@ void	safe_thread(pthread_t *thread, void *(*f)(void *),
 		void *data, t_code code)
 {
 	if (code == CREATE)
-		thread_error_wrapper(pthread_create(thread, NULL, f, data));
+		thread_wrapper(pthread_create(thread, NULL, f, data));
 	else if (code == DETACH)
-		thread_error_wrapper(pthread_detach(thread));
+		thread_wrapper(pthread_detach(*thread));
 	else if (code == JOIN)
-		thread_error_wrapper(pthread_join(thread, NULL));
+		thread_wrapper(pthread_join(*thread, NULL));
 	else
 		error_and_exit("Wrong thread code used\n");
 }

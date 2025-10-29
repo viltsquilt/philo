@@ -6,7 +6,7 @@
 /*   By: vahdekiv <vahdekiv@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/15 11:21:05 by vahdekiv          #+#    #+#             */
-/*   Updated: 2025/10/28 17:31:47 by vahdekiv         ###   ########.fr       */
+/*   Updated: 2025/10/29 13:56:21 by vahdekiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <errno.h>
 # include <stdbool.h>
 # include <limits.h>
+# include <string.h>
 
 # define MAX_PHILOS 200
 
@@ -40,7 +41,7 @@ typedef enum e_code
 	UNLOCK
 }	t_code;
 
-typedef struct s_fork;
+typedef struct s_fork
 {
 	t_mtx	fork;
 	int		fork_id;
@@ -49,16 +50,17 @@ typedef struct s_fork;
 typedef struct s_philo
 {
 	int			id;
+	int			philo_pos;
 	long		meals_counter;
 	bool		full;
 	long		last_meal_time;
-	t_fork		*left_fork;
-	t_fork		*right_fork;
+	t_fork		*first_fork;
+	t_fork		*second_fork;
 	pthread_t	thread_id;
 	t_table		*table;
 }	t_philo;
 
-struct s_table
+typedef struct s_table
 {
 	long	num_of_philos;
 	long	time_to_die;
@@ -74,11 +76,12 @@ struct s_table
 int		main(int argc, char **argv);
 int		ft_usleep(size_t milliseconds);
 int		ft_isdigit(char c);
-long	ft_atol(char *arg);
+long	ft_atol(const char *arg);
 size_t	get_current_time(void);
-void	parse_input(char **argv, t_philo *philo);
+void	parse_input(char **argv, t_table *table);
 void	error_and_exit(char *msg);
 void	*safe_malloc(size_t bytes);
 void	safe_mutex(t_mtx *mutex, t_code code);
+void	data_init(t_table *table);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: vahdekiv <vahdekiv@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/14 15:04:11 by vahdekiv          #+#    #+#             */
-/*   Updated: 2025/10/28 12:50:31 by vahdekiv         ###   ########.fr       */
+/*   Updated: 2025/10/29 13:29:25 by vahdekiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static const char	*valid_input(const char *arg)
 	if (ft_isdigit(*arg) == 1)
 		error_and_exit("Error\nArgument invalid");
 	num = arg;
-	while (ft_isdigit(*arg++) == 0)
+	while (*arg && ft_isdigit(*arg++) == 0)
 		len++;
 	if (len > 10)
 		error_and_exit("Error\nArgument too large");
@@ -70,7 +70,7 @@ long	ft_atol(const char *arg)
 	i = 0;
 	res = 0;
 	arg = valid_input(arg);
-	while (ft_isdigit(arg[i]) == 0)
+	while (arg[i] && ft_isdigit(arg[i]) == 0)
 		res = res * 10 + (arg[i++] - '0');
 	if (res >= INT_MAX)
 		error_and_exit("Error\nArgument too large");

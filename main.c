@@ -6,7 +6,7 @@
 /*   By: vahdekiv <vahdekiv@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/14 13:58:02 by vahdekiv          #+#    #+#             */
-/*   Updated: 2025/10/28 17:05:52 by vahdekiv         ###   ########.fr       */
+/*   Updated: 2025/10/29 14:03:06 by vahdekiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,19 @@
 
 int	main(int argc, char **argv)
 {
-	t_table	*table;
+	t_table	table;
 
 	if (argc < 5 || argc > 6)
 	{
 		write(1, "Error\nInvalid number of arguments", 33);
 		return (1);
 	}
+	memset(&table, 0, sizeof(table));
 	parse_input(argv, &table);
+	printf("num of philos: %ld\n", table.num_of_philos);
 	data_init(&table);
-	dinner(&table);
-	cleanup(&table);
+//	dinner(&table);
+//	cleanup(&table);
 //	printf("Philos: %zu\n", philo.num_of_philos);
 //	printf("Time to die: %zu\n", philo.time_to_die);
 //	printf("Time to eat: %zu\n", philo.time_to_eat);
@@ -32,7 +34,7 @@ int	main(int argc, char **argv)
 //	printf("Number of times to eat: %zu\n", philo.num_times_to_eat);
 	return (0);
 }
-
+/*
 void	dinner(t_table **table)
 {
 	//must hold two forks
@@ -50,3 +52,4 @@ int	monitoring(t_table **table)
 //function to assess priority i.e. which philosopher has waited longest
 //ft_usleep function
 //eating function
+*/

@@ -6,7 +6,7 @@
 #    By: vahdekiv <vahdekiv@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/14 15:45:37 by vahdekiv          #+#    #+#              #
-#    Updated: 2025/10/28 13:06:05 by vahdekiv         ###   ########.fr        #
+#    Updated: 2025/10/29 12:12:47 by vahdekiv         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,6 +14,7 @@ NAME = philo
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
 SRCS = main.c parse_input.c philo_utils.c error_handling.c safe_functions.c \
+		data_init.c
 
 O_DIR = objects
 
