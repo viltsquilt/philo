@@ -6,7 +6,7 @@
 /*   By: vahdekiv <vahdekiv@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 12:21:57 by vahdekiv          #+#    #+#             */
-/*   Updated: 2025/10/29 12:27:28 by vahdekiv         ###   ########.fr       */
+/*   Updated: 2025/10/30 16:00:49 by vahdekiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,45 +22,41 @@ void	*safe_malloc(size_t bytes)
 	return (ret);
 }
 
-static void mutex_wrapper(int status)
+static int mutex_wrapper(int status)
 {
-	if (status == 0)
-		return ;
-	else
-		error_and_exit("Mutex error\n");
+	return (status);
 }
 
-void	safe_mutex(t_mtx *mutex, t_code code)
+int	safe_mutex(t_mtx *mutex, t_code code)
 {
 	if (code == LOCK)
-		mutex_wrapper(pthread_mutex_lock(mutex));
+		return (mutex_wrapper(pthread_mutex_lock(mutex)));
 	else if (code == UNLOCK)
-		mutex_wrapper(pthread_mutex_unlock(mutex));
+		return (mutex_wrapper(pthread_mutex_unlock(mutex)));
 	else if (code == INIT)
-		mutex_wrapper(pthread_mutex_init(mutex, NULL));
+		return (mutex_wrapper(pthread_mutex_init(mutex, NULL)));
 	else if (code == DESTROY)
-		mutex_wrapper(pthread_mutex_destroy(mutex));
+		return (mutex_wrapper(pthread_mutex_destroy(mutex)));
 	else
 		error_and_exit("Wrong mutex code used\n");
+	return (1);
 }
 
-static void	thread_wrapper(int status)
+static int	thread_wrapper(int status)
 {
-	if (status == 0)
-		return ;
-	else
-		error_and_exit("Thread error\n");
+	return (status);
 }
 
-void	safe_thread(pthread_t *thread, void *(*f)(void *),
+int	safe_thread(pthread_t *thread, void *(*f)(void *),
 		void *data, t_code code)
 {
 	if (code == CREATE)
-		thread_wrapper(pthread_create(thread, NULL, f, data));
+		return (thread_wrapper(pthread_create(thread, NULL, f, data)));
 	else if (code == DETACH)
-		thread_wrapper(pthread_detach(*thread));
+		return (thread_wrapper(pthread_detach(*thread)));
 	else if (code == JOIN)
-		thread_wrapper(pthread_join(*thread, NULL));
+		return (thread_wrapper(pthread_join(*thread, NULL)));
 	else
 		error_and_exit("Wrong thread code used\n");
+	return (1);
 }

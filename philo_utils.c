@@ -6,7 +6,7 @@
 /*   By: vahdekiv <vahdekiv@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/14 15:04:11 by vahdekiv          #+#    #+#             */
-/*   Updated: 2025/10/29 13:29:25 by vahdekiv         ###   ########.fr       */
+/*   Updated: 2025/10/30 16:21:26 by vahdekiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	ft_isdigit(char c)
 	return (0);
 }
 
-size_t	get_current_time(void)
+long	get_current_time(void)
 {
 	struct timeval	time;
 

@@ -6,7 +6,7 @@
 /*   By: vahdekiv <vahdekiv@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/15 11:21:05 by vahdekiv          #+#    #+#             */
-/*   Updated: 2025/10/29 13:56:21 by vahdekiv         ###   ########.fr       */
+/*   Updated: 2025/10/30 16:24:35 by vahdekiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,14 @@ typedef enum e_code
 	UNLOCK
 }	t_code;
 
+typedef enum e_philo_code
+{
+	EATING
+	THINKING
+	SLEEPING
+	DEAD
+}	t_philo_code;
+
 typedef struct s_fork
 {
 	t_mtx	fork;
@@ -69,6 +77,7 @@ typedef struct s_table
 	long	num_times_to_eat;
 	long	start;
 	bool	end;
+	int		ready;
 	t_philo	*philos;
 	t_fork	*forks;
 }	t_table;
@@ -77,11 +86,13 @@ int		main(int argc, char **argv);
 int		ft_usleep(size_t milliseconds);
 int		ft_isdigit(char c);
 long	ft_atol(const char *arg);
-size_t	get_current_time(void);
+long	get_current_time(void);
 void	parse_input(char **argv, t_table *table);
 void	error_and_exit(char *msg);
 void	*safe_malloc(size_t bytes);
-void	safe_mutex(t_mtx *mutex, t_code code);
+int		safe_mutex(t_mtx *mutex, t_code code);
+int		safe_thread(pthread_t *thread, void *(*f)(void *), void *data, t_code code);
 void	data_init(t_table *table);
+void	dinner_start(t_table *table);
 
 #endif
