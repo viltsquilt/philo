@@ -6,7 +6,7 @@
 /*   By: vahdekiv <vahdekiv@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/14 15:04:11 by vahdekiv          #+#    #+#             */
-/*   Updated: 2025/10/30 16:21:26 by vahdekiv         ###   ########.fr       */
+/*   Updated: 2025/10/31 15:05:10 by vahdekiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ long	get_current_time(void)
 	return (time.tv_sec * 1000 + time.tv_usec / 1000);
 }
 
-int	ft_usleep(size_t milliseconds)
+int	ft_usleep(long milliseconds)
 {
-	size_t	start;
+	long	start;
 
 	start = get_current_time();
 	if ((get_current_time() - start) < milliseconds)
