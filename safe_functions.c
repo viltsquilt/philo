@@ -6,7 +6,7 @@
 /*   By: vahdekiv <vahdekiv@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 12:21:57 by vahdekiv          #+#    #+#             */
-/*   Updated: 2025/10/30 16:00:49 by vahdekiv         ###   ########.fr       */
+/*   Updated: 2025/11/01 12:23:51 by vahdekiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,11 @@ static int	thread_wrapper(int status)
 	return (status);
 }
 
-int	safe_thread(pthread_t *thread, void *(*f)(void *),
-		void *data, t_code code)
+int	safe_thread(pthread_t *thread, void *data, t_code code)
 {
+	void	*f;
+
+	f = philo_routine;
 	if (code == CREATE)
 		return (thread_wrapper(pthread_create(thread, NULL, f, data)));
 	else if (code == DETACH)

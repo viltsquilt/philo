@@ -6,7 +6,7 @@
 /*   By: vahdekiv <vahdekiv@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/15 11:31:38 by vahdekiv          #+#    #+#             */
-/*   Updated: 2025/10/31 16:54:24 by vahdekiv         ###   ########.fr       */
+/*   Updated: 2025/11/01 13:18:47 by vahdekiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,16 +31,16 @@ void	cleanup(t_table *table, int count)
 
 	i = -1;
 	while (++i < count)
-		safe_thread(table->philos[i]->thread_id, NULL, NULL, JOIN);
-	i = -1
-	while (++i < table->num_of_philos)
-		safe_mutex(table->forks[i]->fork, DESTROY);
-	i = -1
-	while (++i < table->num_of_philos)
-	{
-		if (table->philos[i])
-			free(table->philos[i]);
-		if (table->forks[i])
-			free(table->forks[i]);
-	}
+		safe_thread(&table->philos[i].thread_id, NULL, JOIN);
+	i = -1;
+	while (++i < count)
+		safe_mutex(&table->forks[i].fork, DESTROY);
+	i = -1;
+	while (++i < count)
+		safe_mutex(&table->philos[i].meals, DESTROY);
+	if (table->philos)
+		free(table->philos);
+	if (table->forks)
+		free(table->forks);
+	exit(0);
 }

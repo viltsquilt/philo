@@ -6,7 +6,7 @@
 /*   By: vahdekiv <vahdekiv@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 12:42:19 by vahdekiv          #+#    #+#             */
-/*   Updated: 2025/10/31 15:56:22 by vahdekiv         ###   ########.fr       */
+/*   Updated: 2025/11/01 14:43:01 by vahdekiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,22 @@
 
 void	eating(t_philo *philo)
 {
-	printf("%i %i is eating\n", (get_current_time() - philo->table->start),
-	philo->philo_id);
+	safe_mutex(&philo->meals, LOCK);
+	printf("%ld %i is eating\n", (get_current_time() - philo->table->start),
+	philo->id);
 	ft_usleep(philo->table->time_to_eat);
-	safe_mutex(philo->meals, LOCK);
 	philo->meals_counter++;
-	philo->last_meal_time = get_current_time();
-	safe_mutex(philo->meals, UNLOCK);
+	philo->last_meal_time = get_current_time() - philo->table->start;
 	if (philo->meals_counter == philo->table->num_times_to_eat)
 		philo->full = true;
+	safe_mutex(&philo->meals, UNLOCK);
 }
 
 void	sleeping(t_philo *philo)
 {
-	printf("%i %i is sleeping\n", (get_current_time() - philo->table->start),
-	philo->philo_id);
+	safe_mutex(&philo->meals, LOCK);
+	printf("%ld %i is sleeping\n", (get_current_time() - philo->table->start),
+	philo->id);
 	ft_usleep(philo->table->time_to_sleep);
-	safe_mutex(philo->meals, LOCK);
-	philo->last_meal_time = get_current_time() - philo->last_meal_time;
-	safe_mutex(philo->meals, UNLOCK);
+	safe_mutex(&philo->meals, UNLOCK);
 }

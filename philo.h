@@ -6,7 +6,7 @@
 /*   By: vahdekiv <vahdekiv@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/15 11:21:05 by vahdekiv          #+#    #+#             */
-/*   Updated: 2025/10/31 16:58:37 by vahdekiv         ###   ########.fr       */
+/*   Updated: 2025/11/01 13:03:02 by vahdekiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,9 @@ typedef enum e_code
 
 typedef enum e_philo_code
 {
-	EATING
-	THINKING
-	SLEEPING
+	EATING,
+	THINKING,
+	SLEEPING,
 	FORK
 }	t_philo_code;
 
@@ -65,7 +65,6 @@ typedef struct s_philo
 	t_fork		*first_fork;
 	t_fork		*second_fork;
 	t_mtx		meals;
-	t_mtx		meal_time;
 	pthread_t	thread_id;
 	t_table		*table;
 }	t_philo;
@@ -93,10 +92,10 @@ void	parse_input(char **argv, t_table *table);
 void	error_and_exit(char *msg);
 void	*safe_malloc(size_t bytes);
 int		safe_mutex(t_mtx *mutex, t_code code);
-int		safe_thread(pthread_t *thread, void *(*f)(void *),
-		void *data, t_code code);
+int		safe_thread(pthread_t *thread, void *data, t_code code);
 void	data_init(t_table *table);
 void	dinner_start(t_table *data);
+void	philo_routine(void *data);
 void	eating(t_philo *philo);
 void	sleeping(t_philo *philo);
 void	cleanup(t_table *table, int count);
