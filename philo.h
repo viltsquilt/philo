@@ -6,7 +6,7 @@
 /*   By: vahdekiv <vahdekiv@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/15 11:21:05 by vahdekiv          #+#    #+#             */
-/*   Updated: 2025/11/01 13:03:02 by vahdekiv         ###   ########.fr       */
+/*   Updated: 2025/11/01 15:24:21 by vahdekiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ int		safe_thread(pthread_t *thread, void *data, t_code code);
 void	data_init(t_table *table);
 void	dinner_start(t_table *data);
 void	philo_routine(void *data);
+void	print_state(char *msg, long value, int id);
 void	eating(t_philo *philo);
 void	sleeping(t_philo *philo);
 void	cleanup(t_table *table, int count);

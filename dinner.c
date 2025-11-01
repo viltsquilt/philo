@@ -6,7 +6,7 @@
 /*   By: vahdekiv <vahdekiv@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/30 13:06:54 by vahdekiv          #+#    #+#             */
-/*   Updated: 2025/11/01 14:38:24 by vahdekiv         ###   ########.fr       */
+/*   Updated: 2025/11/01 15:48:29 by vahdekiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,9 @@ static void monitor(t_table *table)
 				> table->time_to_die)
 			{
 				safe_mutex(&table->philos->meals, LOCK);
-				printf("%ld %i has died\n", (get_current_time() - table->start),
+				print_state("has died\n", (get_current_time() - table->start),
 				table->philos[count].id);
-				printf("%ld %i last meal time\n", table->philos[count].last_meal_time, table->philos[count].id);
+				print_state("last meal time\n", table->philos[count].last_meal_time, table->philos[count].id);
 				table->end = true;
 				safe_mutex(&table->philos->meals, UNLOCK);
 				break ;
@@ -47,19 +47,34 @@ static void monitor(t_table *table)
 	}
 }
 
-static void	print_state(t_philo *philo, t_philo_code code)
+void	print_state(char *msg, long value, int id)
+{
+	long	ms;
+
+	ms = value * 1e2;
+	printf("%ldms ", ms);
+	printf("%i ", id);
+	printf("%s", msg);
+
+}
+
+static void	philo_state(t_philo *philo, t_philo_code code)
 {
 	if (code == EATING && !philo->table->end)
 		eating(philo);
 	else if (code == SLEEPING && !philo->table->end)
 		sleeping(philo);
 	else if (code == FORK && !philo->table->end)
-		printf("%ld %i has taken a fork\n", (get_current_time() - philo->table->start),
+	{
+		safe_mutex(&philo->meals, LOCK);
+		print_state("has taken a fork\n", (get_current_time() - philo->table->start),
 		philo->id);
+		safe_mutex(&philo->meals, UNLOCK);
+	}
 	else if (!philo->table->end)
 	{
 		safe_mutex(&philo->meals, LOCK);
-		printf("%ld %i is thinking\n", (get_current_time() - philo->table->start),
+		print_state("is thinking\n", (get_current_time() - philo->table->start),
 		philo->id);
 		safe_mutex(&philo->meals, UNLOCK);
 	}
@@ -80,14 +95,14 @@ void	philo_routine(void *data)
 	while (!philo->table->end)
 	{
 		safe_mutex(&philo->first_fork->fork, LOCK);
-		print_state(philo, FORK);
+		philo_state(philo, FORK);
 		safe_mutex(&philo->second_fork->fork, LOCK);
-		print_state(philo, FORK);
-		print_state(philo, EATING);
+		philo_state(philo, FORK);
+		philo_state(philo, EATING);
 		safe_mutex(&philo->first_fork->fork, UNLOCK);
 		safe_mutex(&philo->second_fork->fork, UNLOCK);
-		print_state(philo, SLEEPING);
-		print_state(philo, THINKING);
+		philo_state(philo, SLEEPING);
+		philo_state(philo, THINKING);
 	}
 }
 

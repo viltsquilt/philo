@@ -6,7 +6,7 @@
 /*   By: vahdekiv <vahdekiv@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 12:42:19 by vahdekiv          #+#    #+#             */
-/*   Updated: 2025/11/01 14:43:01 by vahdekiv         ###   ########.fr       */
+/*   Updated: 2025/11/01 15:20:50 by vahdekiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	eating(t_philo *philo)
 {
 	safe_mutex(&philo->meals, LOCK);
-	printf("%ld %i is eating\n", (get_current_time() - philo->table->start),
+	print_state("is eating\n", (get_current_time() - philo->table->start),
 	philo->id);
 	ft_usleep(philo->table->time_to_eat);
 	philo->meals_counter++;
@@ -28,7 +28,7 @@ void	eating(t_philo *philo)
 void	sleeping(t_philo *philo)
 {
 	safe_mutex(&philo->meals, LOCK);
-	printf("%ld %i is sleeping\n", (get_current_time() - philo->table->start),
+	print_state("is sleeping\n", (get_current_time() - philo->table->start),
 	philo->id);
 	ft_usleep(philo->table->time_to_sleep);
 	safe_mutex(&philo->meals, UNLOCK);
