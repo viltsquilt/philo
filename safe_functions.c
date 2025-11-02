@@ -6,7 +6,7 @@
 /*   By: vahdekiv <vahdekiv@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 12:21:57 by vahdekiv          #+#    #+#             */
-/*   Updated: 2025/11/01 12:23:51 by vahdekiv         ###   ########.fr       */
+/*   Updated: 2025/11/02 15:23:54 by vahdekiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,31 +21,31 @@ void	*safe_malloc(size_t bytes)
 		error_and_exit("Malloc failure\n");
 	return (ret);
 }
-
+/*
 static int mutex_wrapper(int status)
 {
 	return (status);
-}
+}*/
 
 int	safe_mutex(t_mtx *mutex, t_code code)
 {
 	if (code == LOCK)
-		return (mutex_wrapper(pthread_mutex_lock(mutex)));
+		return (pthread_mutex_lock(mutex));
 	else if (code == UNLOCK)
-		return (mutex_wrapper(pthread_mutex_unlock(mutex)));
+		return (pthread_mutex_unlock(mutex));
 	else if (code == INIT)
-		return (mutex_wrapper(pthread_mutex_init(mutex, NULL)));
+		return (pthread_mutex_init(mutex, NULL));
 	else if (code == DESTROY)
-		return (mutex_wrapper(pthread_mutex_destroy(mutex)));
+		return (pthread_mutex_destroy(mutex));
 	else
 		error_and_exit("Wrong mutex code used\n");
 	return (1);
 }
-
+/*
 static int	thread_wrapper(int status)
 {
 	return (status);
-}
+}*/
 
 int	safe_thread(pthread_t *thread, void *data, t_code code)
 {
@@ -53,11 +53,11 @@ int	safe_thread(pthread_t *thread, void *data, t_code code)
 
 	f = philo_routine;
 	if (code == CREATE)
-		return (thread_wrapper(pthread_create(thread, NULL, f, data)));
+		return (pthread_create(thread, NULL, f, data));
 	else if (code == DETACH)
-		return (thread_wrapper(pthread_detach(*thread)));
+		return (pthread_detach(*thread));
 	else if (code == JOIN)
-		return (thread_wrapper(pthread_join(*thread, NULL)));
+		return (pthread_join(*thread, NULL));
 	else
 		error_and_exit("Wrong thread code used\n");
 	return (1);

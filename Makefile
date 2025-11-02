@@ -6,13 +6,13 @@
 #    By: vahdekiv <vahdekiv@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/14 15:45:37 by vahdekiv          #+#    #+#              #
-#    Updated: 2025/10/31 16:55:59 by vahdekiv         ###   ########.fr        #
+#    Updated: 2025/11/02 13:16:26 by vahdekiv         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = philo
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g
 SRCS = main.c parse_input.c philo_utils.c error_handling.c safe_functions.c \
 		data_init.c dinner.c dinner_utils.c
 

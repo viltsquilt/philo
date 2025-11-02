@@ -6,7 +6,7 @@
 /*   By: vahdekiv <vahdekiv@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/28 17:06:20 by vahdekiv          #+#    #+#             */
-/*   Updated: 2025/11/01 15:45:57 by vahdekiv         ###   ########.fr       */
+/*   Updated: 2025/11/02 15:50:53 by vahdekiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,10 @@ static void	philo_init(t_table *table)
 		philo->meals_counter = 0;
 		philo->full = false;
 		philo->table = table;
-		if (safe_mutex(&philo->meals, INIT))
+		if (pthread_mutex_init(&philo->meals, NULL))
 			cleanup(table, i);
 		forks_init(philo, table->forks, i);
 		philo->last_meal_time = table->start;
-		printf("current time - last meal time: %ld\n", get_current_time() - philo->last_meal_time);
 	}
 }
 
@@ -50,7 +49,7 @@ void	data_init(t_table *table)
 	table->forks = safe_malloc(sizeof(t_fork) * table->num_of_philos);
     while (++i < table->num_of_philos)
 	{
-		if (safe_mutex(&table->forks[i].fork, INIT))
+		if (pthread_mutex_init(&table->forks[i].fork, NULL))
 			cleanup(table, i);
 		table->forks[i].fork_id = i;
 	}

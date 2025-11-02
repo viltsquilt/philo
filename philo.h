@@ -6,7 +6,7 @@
 /*   By: vahdekiv <vahdekiv@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/15 11:21:05 by vahdekiv          #+#    #+#             */
-/*   Updated: 2025/11/01 15:24:21 by vahdekiv         ###   ########.fr       */
+/*   Updated: 2025/11/02 14:26:32 by vahdekiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,8 @@ typedef struct s_table
 	long	start;
 	bool	end;
 	int		ready;
+	int		count;
+	int		full_count;
 	t_philo	*philos;
 	t_fork	*forks;
 }	t_table;
@@ -96,9 +98,12 @@ int		safe_thread(pthread_t *thread, void *data, t_code code);
 void	data_init(t_table *table);
 void	dinner_start(t_table *data);
 void	philo_routine(void *data);
-void	print_state(char *msg, long value, int id);
+void	print_state(t_philo *philo, char *msg, long value, int id);
 void	eating(t_philo *philo);
 void	sleeping(t_philo *philo);
+void	take_fork(t_philo *philo);
+void	thinking(t_philo *philo);
+void	death(t_table *table);
 void	cleanup(t_table *table, int count);
 
 #endif

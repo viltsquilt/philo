@@ -6,7 +6,7 @@
 /*   By: vahdekiv <vahdekiv@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/14 14:38:54 by vahdekiv          #+#    #+#             */
-/*   Updated: 2025/11/01 15:46:20 by vahdekiv         ###   ########.fr       */
+/*   Updated: 2025/11/02 12:47:20 by vahdekiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,4 @@ void	parse_input(char **argv, t_table *table)
 	else
 		table->num_times_to_eat = -1;
 	table->start = get_current_time();
-	printf("philos: %ld\n", table->num_of_philos);
-	printf("time to die: %ld\n", table->time_to_die);
-	printf("time to eat: %ld\n", table->time_to_eat);
-	printf("time to sleep: %ld\n", table->time_to_sleep);
-	printf("num times to eat: %ld\n", table->num_times_to_eat);
-	printf("start time: %ld\n", table->start);
 }
