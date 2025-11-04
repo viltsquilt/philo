@@ -6,7 +6,7 @@
 /*   By: vahdekiv <vahdekiv@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/14 15:04:11 by vahdekiv          #+#    #+#             */
-/*   Updated: 2025/11/02 15:28:07 by vahdekiv         ###   ########.fr       */
+/*   Updated: 2025/11/04 14:26:10 by vahdekiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	ft_usleep(long milliseconds)
 	long	start;
 
 	start = get_current_time();
-	if ((get_current_time() - start) < milliseconds)
+	while ((get_current_time() - start) < milliseconds)
 		usleep(500);
 	return (0);
 }

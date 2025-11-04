@@ -6,7 +6,7 @@
 /*   By: vahdekiv <vahdekiv@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/30 13:06:54 by vahdekiv          #+#    #+#             */
-/*   Updated: 2025/11/02 15:50:17 by vahdekiv         ###   ########.fr       */
+/*   Updated: 2025/11/04 17:00:26 by vahdekiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,46 +22,21 @@ static void monitor(t_table *table)
 		{
 			if (table->philos[table->count].full)
 			{
-				safe_mutex(&table->philos[table->count].meals, LOCK);
+				safe_mutex(&table->philos[table->count].data_lock, LOCK);
 				table->full_count++;
-				safe_mutex(&table->philos[table->count].meals, UNLOCK);
+				safe_mutex(&table->philos[table->count].data_lock, UNLOCK);
 				if (table->full_count == table->num_of_philos)
 				{
-					safe_mutex(&table->philos[table->count].meals, LOCK);
+					safe_mutex(&table->philos[table->count].data_lock, LOCK);
 					table->end = true;
-					safe_mutex(&table->philos[table->count].meals, UNLOCK);
+					safe_mutex(&table->philos[table->count].data_lock, UNLOCK);
 				}
 			}
-			if ((get_current_time() - table->start -
-				table->philos[table->count].last_meal_time) > table->time_to_die)
-			{
-				safe_mutex(&table->philos[table->count].meals, LOCK);
-				death(table);
-//				printf("%03ldms %i has died\n", (get_current_time() - table->start), table->philos[table->count].id);
-//				table->end = true;
-				safe_mutex(&table->philos[table->count].meals, UNLOCK);
+			if (death(table, table->count))
 				break ;
-			}
-//			safe_mutex(&table->philos[table->count].meals, LOCK);
 			table->count++;
-//			safe_mutex(&table->philos[table->count].meals, UNLOCK);
 		}
-
 	}
-}
-
-void	print_state(t_philo *philo, char *msg, long value, int id)
-{
-	long	ms;
-
-	ms = value;
-	if (!philo->table->end)
-	{
-		safe_mutex(&philo->meals, LOCK);
-		printf("%03ld %i %s", ms, id, msg);
-		safe_mutex(&philo->meals, UNLOCK);
-	}
-
 }
 
 static void	philo_state(t_philo *philo, t_philo_code code)
@@ -86,18 +61,32 @@ void	philo_routine(void *data)
 		if (philo->table->ready == 1)
 			break;
 	}
+	if (philo->id % 2 != 0 && get_current_time() - philo->table->start < philo->table->time_to_eat && !philo->table->end)
+		usleep(500);
 	philo_state(philo, THINKING);
 	while (!philo->table->end)
 	{
-		safe_mutex(&philo->first_fork->fork, LOCK);
-		philo_state(philo, FORK);
-		safe_mutex(&philo->second_fork->fork, LOCK);
-		philo_state(philo, FORK);
-		philo_state(philo, EATING);
-		safe_mutex(&philo->first_fork->fork, UNLOCK);
-		safe_mutex(&philo->second_fork->fork, UNLOCK);
+		if (philo->id  % 2 !=  0)
+		{
+			safe_mutex(&philo->second_fork->fork, LOCK);
+			philo_state(philo, FORK);
+			safe_mutex(&philo->first_fork->fork, LOCK);
+			philo_state(philo, FORK);
+			philo_state(philo, EATING);
+			safe_mutex(&philo->second_fork->fork, UNLOCK);
+			safe_mutex(&philo->first_fork->fork, UNLOCK);
+		}
+		else
+		{
+			safe_mutex(&philo->first_fork->fork, LOCK);
+			philo_state(philo, FORK);
+			safe_mutex(&philo->second_fork->fork, LOCK);
+			philo_state(philo, FORK);
+			philo_state(philo, EATING);
+			safe_mutex(&philo->first_fork->fork, UNLOCK);
+			safe_mutex(&philo->second_fork->fork, UNLOCK);
+		}
 		philo_state(philo, SLEEPING);
-		philo_state(philo, THINKING);
 	}
 }
 

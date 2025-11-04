@@ -6,7 +6,7 @@
 /*   By: vahdekiv <vahdekiv@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/15 11:31:38 by vahdekiv          #+#    #+#             */
-/*   Updated: 2025/11/02 15:13:47 by vahdekiv         ###   ########.fr       */
+/*   Updated: 2025/11/04 14:10:54 by vahdekiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	cleanup(t_table *table, int count)
 		safe_mutex(&table->forks[i++].fork, DESTROY);
 	i = 0;
 	while (i < count)
-		safe_mutex(&table->philos[i++].meals, DESTROY);
+		safe_mutex(&table->philos[i++].data_lock, DESTROY);
 	if (table->philos)
 		free(table->philos);
 	if (table->forks)

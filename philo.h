@@ -6,7 +6,7 @@
 /*   By: vahdekiv <vahdekiv@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/15 11:21:05 by vahdekiv          #+#    #+#             */
-/*   Updated: 2025/11/02 14:26:32 by vahdekiv         ###   ########.fr       */
+/*   Updated: 2025/11/04 15:57:33 by vahdekiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ typedef struct s_philo
 	long		last_meal_time;
 	t_fork		*first_fork;
 	t_fork		*second_fork;
-	t_mtx		meals;
+	t_mtx		data_lock;
 	pthread_t	thread_id;
 	t_table		*table;
 }	t_philo;
@@ -98,12 +98,11 @@ int		safe_thread(pthread_t *thread, void *data, t_code code);
 void	data_init(t_table *table);
 void	dinner_start(t_table *data);
 void	philo_routine(void *data);
-void	print_state(t_philo *philo, char *msg, long value, int id);
 void	eating(t_philo *philo);
 void	sleeping(t_philo *philo);
 void	take_fork(t_philo *philo);
 void	thinking(t_philo *philo);
-void	death(t_table *table);
+int		death(t_table *table, int i);
 void	cleanup(t_table *table, int count);
 
 #endif

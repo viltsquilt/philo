@@ -6,7 +6,7 @@
 /*   By: vahdekiv <vahdekiv@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 12:42:19 by vahdekiv          #+#    #+#             */
-/*   Updated: 2025/11/02 15:27:53 by vahdekiv         ###   ########.fr       */
+/*   Updated: 2025/11/04 16:56:45 by vahdekiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,39 +14,77 @@
 
 void	eating(t_philo *philo)
 {
-	print_state(philo, "is eating\n", (get_current_time() - philo->table->start),
-	philo->id);
-	ft_usleep(philo->table->time_to_eat);
-	philo->meals_counter++;
-	philo->last_meal_time = get_current_time() - philo->table->start;
-	if (philo->meals_counter == philo->table->num_times_to_eat)
-		philo->full = true;
+	if (!philo->table->end)
+	{
+		philo->last_meal_time = get_current_time() - philo->table->start;
+		safe_mutex(&philo->data_lock, LOCK);
+		printf("%ld %i is eating\n", (get_current_time() - philo->table->start),
+		philo->id);
+		safe_mutex(&philo->data_lock, UNLOCK);
+		ft_usleep(philo->table->time_to_eat);
+		philo->meals_counter++;
+		if (philo->meals_counter == philo->table->num_times_to_eat)
+			philo->full = true;
+	}
 }
 
 void	sleeping(t_philo *philo)
 {
-	print_state(philo, "is sleeping\n", (get_current_time() - philo->table->start),
-	philo->id);
-	ft_usleep(philo->table->time_to_sleep);
+	if (!philo->table->end)
+	{
+		safe_mutex(&philo->data_lock, LOCK);
+		printf("%ld %i is sleeping\n",
+		(get_current_time() - philo->table->start), philo->id);
+		safe_mutex(&philo->data_lock, UNLOCK);
+		ft_usleep(philo->table->time_to_sleep);
+		thinking(philo);
+	}
 }
 
 void	take_fork(t_philo *philo)
 {
-	print_state(philo, "has taken a fork\n", (get_current_time() - philo->table->start),
-	philo->id);
+	if (!philo->table->end)
+	{
+		safe_mutex(&philo->data_lock, LOCK);
+		printf("%ld %i has taken a fork\n",
+		(get_current_time() - philo->table->start), philo->id);
+		safe_mutex(&philo->data_lock, UNLOCK);
+	}
 }
 
 void	thinking(t_philo *philo)
 {
-	print_state(philo, "is thinking\n", (get_current_time() - philo->table->start),
-	philo->id);
+	long	time;
+
+	if (!philo->table->end)
+	{
+		safe_mutex(&philo->data_lock, LOCK);
+		printf("%ld %i is thinking\n",
+		(get_current_time() - philo->table->start), philo->id);
+		safe_mutex(&philo->data_lock, UNLOCK);
+		time = 1000 * (philo->table->time_to_die - philo->table->time_to_eat -
+		philo->table->time_to_sleep);
+		if (philo->table->num_of_philos % 2 != 0 && time > 0 && time < 500000)
+			usleep(time * 0.75);
+		else if (time > 0 && time < 500000)
+			usleep(time * 0.25);
+		else
+			usleep(500);
+	}
 }
 
-void	death(t_table *table)
+int	death(t_table *table, int i)
 {
-	printf("%03ldms %i has died\n", (get_current_time() - table->start), table->philos[table->count].id);
-//	print_state(&table->philos[table->count], "has died\n", (get_current_time() - table->start),
-//	table->philos[table->count].id);
-	table->end = true;
+	safe_mutex(&table->philos[i].data_lock, LOCK);
+	if ((get_current_time() - table->start -
+		table->philos[i].last_meal_time) > table->time_to_die)
+	{
+		printf("%03ld %i died\n",
+		(get_current_time() - table->start), table->philos[i].id);
+		table->end = true;
+		safe_mutex(&table->philos[i].data_lock, UNLOCK);
+		return (1);
+	}
+	safe_mutex(&table->philos[i].data_lock, UNLOCK);
+	return (0);
 }
-
