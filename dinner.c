@@ -6,7 +6,7 @@
 /*   By: vahdekiv <vahdekiv@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/30 13:06:54 by vahdekiv          #+#    #+#             */
-/*   Updated: 2025/11/04 17:00:26 by vahdekiv         ###   ########.fr       */
+/*   Updated: 2025/11/04 18:07:45 by vahdekiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,14 @@ static void monitor(t_table *table)
 		{
 			if (table->philos[table->count].full)
 			{
-				safe_mutex(&table->philos[table->count].data_lock, LOCK);
+				safe_mutex(&table->data_lock, LOCK);
 				table->full_count++;
-				safe_mutex(&table->philos[table->count].data_lock, UNLOCK);
+				safe_mutex(&table->data_lock, UNLOCK);
 				if (table->full_count == table->num_of_philos)
 				{
-					safe_mutex(&table->philos[table->count].data_lock, LOCK);
+					safe_mutex(&table->data_lock, LOCK);
 					table->end = true;
-					safe_mutex(&table->philos[table->count].data_lock, UNLOCK);
+					safe_mutex(&table->data_lock, UNLOCK);
 				}
 			}
 			if (death(table, table->count))
