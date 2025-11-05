@@ -6,13 +6,11 @@
 /*   By: vahdekiv <vahdekiv@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/14 14:38:54 by vahdekiv          #+#    #+#             */
-/*   Updated: 2025/11/02 12:47:20 by vahdekiv         ###   ########.fr       */
+/*   Updated: 2025/11/05 15:40:15 by vahdekiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-// 1e3 = 1000
 
 void	parse_input(char **argv, t_table *table)
 {

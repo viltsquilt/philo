@@ -6,7 +6,7 @@
 /*   By: vahdekiv <vahdekiv@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/30 13:06:54 by vahdekiv          #+#    #+#             */
-/*   Updated: 2025/11/04 18:07:45 by vahdekiv         ###   ########.fr       */
+/*   Updated: 2025/11/05 15:58:20 by vahdekiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,13 @@ static void monitor(t_table *table)
 				}
 			}
 			if (death(table, table->count))
-				break ;
+				return ;
 			table->count++;
 		}
 	}
 }
 
-static void	philo_state(t_philo *philo, t_philo_code code)
+void	philo_state(t_philo *philo, t_philo_code code)
 {
 	if (code == EATING && !philo->table->end)
 		eating(philo);
@@ -61,6 +61,9 @@ void	philo_routine(void *data)
 		if (philo->table->ready == 1)
 			break;
 	}
+	if (philo->table->num_of_philos == 1)
+		single(philo);
+//	philo->last_meal_time = philo->table->start;
 	if (philo->id % 2 != 0 && get_current_time() - philo->table->start < philo->table->time_to_eat && !philo->table->end)
 		usleep(500);
 	philo_state(philo, THINKING);
@@ -86,6 +89,8 @@ void	philo_routine(void *data)
 			safe_mutex(&philo->first_fork->fork, UNLOCK);
 			safe_mutex(&philo->second_fork->fork, UNLOCK);
 		}
+		if (philo->table->end)
+			break ;
 		philo_state(philo, SLEEPING);
 	}
 }
