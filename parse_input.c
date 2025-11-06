@@ -6,7 +6,7 @@
 /*   By: vahdekiv <vahdekiv@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/14 14:38:54 by vahdekiv          #+#    #+#             */
-/*   Updated: 2025/11/05 15:40:15 by vahdekiv         ###   ########.fr       */
+/*   Updated: 2025/11/06 13:16:45 by vahdekiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,9 @@ void	parse_input(char **argv, t_table *table)
 	table->time_to_sleep = ft_atol(argv[4]);
 	if (table->time_to_die < 60 || table->time_to_eat < 60
 		|| (table->time_to_sleep < 60))
-		error_and_exit("Error\nTimestamps must be over 60 ms");
+		error_and_exit("Error\nTimestamps must be over 60 ms\n");
+	if (table->num_of_philos > MAX_PHILOS)
+		error_and_exit("Error\nToo many philos\n");
 	if (argv[5])
 		table->num_times_to_eat = ft_atol(argv[5]);
 	else

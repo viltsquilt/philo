@@ -6,7 +6,7 @@
 /*   By: vahdekiv <vahdekiv@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/15 11:21:05 by vahdekiv          #+#    #+#             */
-/*   Updated: 2025/11/05 12:03:31 by vahdekiv         ###   ########.fr       */
+/*   Updated: 2025/11/06 13:14:30 by vahdekiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,15 +57,15 @@ typedef struct s_fork
 
 typedef struct s_philo
 {
-	int			id;
-	int			philo_pos;
-	long		meals_counter;
-	bool		full;
-	long		last_meal_time;
-	t_fork		*first_fork;
-	t_fork		*second_fork;
-	pthread_t	thread_id;
-	t_table		*table;
+	int				id;
+	int				philo_pos;
+	long			meals_counter;
+	_Atomic bool	full;
+	long			last_meal_time;
+	t_fork			*first_fork;
+	t_fork			*second_fork;
+	pthread_t		thread_id;
+	t_table			*table;
 }	t_philo;
 
 typedef struct s_table

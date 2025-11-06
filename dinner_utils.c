@@ -6,7 +6,7 @@
 /*   By: vahdekiv <vahdekiv@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/31 12:42:19 by vahdekiv          #+#    #+#             */
-/*   Updated: 2025/11/05 16:04:33 by vahdekiv         ###   ########.fr       */
+/*   Updated: 2025/11/06 13:18:03 by vahdekiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	eating(t_philo *philo)
 {
-	philo->last_meal_time = get_current_time() - philo->table->start;
+	philo->last_meal_time = get_current_time();
 	safe_mutex(&philo->table->data_lock, LOCK);
 	if (!philo->table->end)
 		printf("%ld %i is eating\n", (get_current_time() - philo->table->start),
@@ -70,11 +70,6 @@ void	thinking(t_philo *philo)
 int	death(t_table *table, int i)
 {
 	safe_mutex(&table->data_lock, LOCK);
-//	printf("current time: %ld\n", get_current_time());
-//	printf("start time: %ld\n", table->start);
-//	printf("elapsed time: %ld\n", get_current_time() - table->start);
-//	printf("last meal time: %ld\n", table->philos[i].last_meal_time);
-//	printf("time elapsed from last meal until death: %ld\n", get_current_time() - table->philos[i].last_meal_time);
 	if ((get_current_time() -
 		table->philos[i].last_meal_time) > table->time_to_die)
 	{

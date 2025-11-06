@@ -6,7 +6,7 @@
 /*   By: vahdekiv <vahdekiv@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/28 17:06:20 by vahdekiv          #+#    #+#             */
-/*   Updated: 2025/11/05 15:57:44 by vahdekiv         ###   ########.fr       */
+/*   Updated: 2025/11/06 13:05:28 by vahdekiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ static void	philo_init(t_table *table)
 		philo->table = table;
 		forks_init(philo, table->forks, i);
 		philo->last_meal_time = table->start;
-//		philo->last_meal_time = 0;
 	}
 }
 

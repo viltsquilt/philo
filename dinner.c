@@ -6,7 +6,7 @@
 /*   By: vahdekiv <vahdekiv@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/30 13:06:54 by vahdekiv          #+#    #+#             */
-/*   Updated: 2025/11/05 15:58:20 by vahdekiv         ###   ########.fr       */
+/*   Updated: 2025/11/06 13:13:34 by vahdekiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,10 +63,9 @@ void	philo_routine(void *data)
 	}
 	if (philo->table->num_of_philos == 1)
 		single(philo);
-//	philo->last_meal_time = philo->table->start;
-	if (philo->id % 2 != 0 && get_current_time() - philo->table->start < philo->table->time_to_eat && !philo->table->end)
+	if (philo->id % 2 != 0)
 		usleep(500);
-	philo_state(philo, THINKING);
+//	philo_state(philo, THINKING);
 	while (!philo->table->end)
 	{
 		if (philo->id  % 2 !=  0)
