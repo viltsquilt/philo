@@ -6,7 +6,7 @@
 /*   By: vahdekiv <vahdekiv@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/15 11:21:05 by vahdekiv          #+#    #+#             */
-/*   Updated: 2025/11/06 13:14:30 by vahdekiv         ###   ########.fr       */
+/*   Updated: 2025/11/07 14:12:23 by vahdekiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@
 
 # define MAX_PHILOS 200
 
-typedef struct s_table t_table;
+typedef struct s_table	t_table;
 
-typedef pthread_mutex_t t_mtx;
+typedef pthread_mutex_t	t_mtx;
 
 typedef enum e_code
 {
@@ -61,7 +61,7 @@ typedef struct s_philo
 	int				philo_pos;
 	long			meals_counter;
 	_Atomic bool	full;
-	long			last_meal_time;
+	_Atomic long	last_meal_time;
 	t_fork			*first_fork;
 	t_fork			*second_fork;
 	pthread_t		thread_id;

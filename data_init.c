@@ -6,7 +6,7 @@
 /*   By: vahdekiv <vahdekiv@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/28 17:06:20 by vahdekiv          #+#    #+#             */
-/*   Updated: 2025/11/06 13:05:28 by vahdekiv         ###   ########.fr       */
+/*   Updated: 2025/11/07 14:13:19 by vahdekiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static void	philo_init(t_table *table)
 	t_philo	*philo;
 
 	i = -1;
-	while(++i < table->num_of_philos)
+	while (++i < table->num_of_philos)
 	{
 		philo = &table->philos[i];
 		philo->id = i + 1;
@@ -45,7 +45,7 @@ void	data_init(t_table *table)
 	table->end = false;
 	table->philos = safe_malloc(sizeof(t_philo) * table->num_of_philos);
 	table->forks = safe_malloc(sizeof(t_fork) * table->num_of_philos);
-    while (++i < table->num_of_philos)
+	while (++i < table->num_of_philos)
 	{
 		if (safe_mutex(&table->forks[i].fork, INIT))
 			cleanup(table, i);
