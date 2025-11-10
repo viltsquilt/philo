@@ -6,7 +6,7 @@
 /*   By: vahdekiv <vahdekiv@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 12:21:57 by vahdekiv          #+#    #+#             */
-/*   Updated: 2025/11/02 15:23:54 by vahdekiv         ###   ########.fr       */
+/*   Updated: 2025/11/10 13:54:53 by vahdekiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,6 @@ void	*safe_malloc(size_t bytes)
 		error_and_exit("Malloc failure\n");
 	return (ret);
 }
-/*
-static int mutex_wrapper(int status)
-{
-	return (status);
-}*/
 
 int	safe_mutex(t_mtx *mutex, t_code code)
 {
@@ -41,11 +36,6 @@ int	safe_mutex(t_mtx *mutex, t_code code)
 		error_and_exit("Wrong mutex code used\n");
 	return (1);
 }
-/*
-static int	thread_wrapper(int status)
-{
-	return (status);
-}*/
 
 int	safe_thread(pthread_t *thread, void *data, t_code code)
 {

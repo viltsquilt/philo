@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: vahdekiv <vahdekiv@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/30 13:06:54 by vahdekiv          #+#    #+#             */
-/*   Updated: 2025/11/07 14:10:57 by vahdekiv         ###   ########.fr       */
+/*   Created: 2025/11/10 13:52:07 by vahdekiv          #+#    #+#             */
+/*   Updated: 2025/11/10 14:09:56 by vahdekiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ static void	monitor(t_table *table)
 				{
 					safe_mutex(&table->data_lock, LOCK);
 					table->end = true;
-					printf("Everyone is full\n");
 					safe_mutex(&table->data_lock, UNLOCK);
 				}
 			}
@@ -37,6 +36,7 @@ static void	monitor(t_table *table)
 				return ;
 			table->count++;
 		}
+		usleep(100);
 	}
 }
 
@@ -52,7 +52,7 @@ void	philo_state(t_philo *philo, t_philo_code code)
 		thinking(philo);
 }
 
-static void	routine_helper(t_philo *philo)
+void	routine_helper(t_philo *philo)
 {
 	if (philo->id % 2 != 0)
 	{
@@ -79,10 +79,8 @@ static void	routine_helper(t_philo *philo)
 void	philo_routine(void *data)
 {
 	t_philo	*philo;
-	bool	last;
 
 	philo = (void *)data;
-	last = false;
 	while (1)
 	{
 		if (philo->table->ready == 1)
@@ -90,18 +88,14 @@ void	philo_routine(void *data)
 			philo->last_meal_time = get_current_time();
 			break ;
 		}
+		usleep(100);
 	}
 	if (philo->table->num_of_philos == 1)
-		single(philo);
-	if (philo->id == philo->table->num_of_philos)
-		last = true;
-	if (philo->id % 2 != 0 && last == false)
-		usleep(5000);
-	while (!philo->table->end)
 	{
-		routine_helper(philo);
-		philo_state(philo, SLEEPING);
+		single(philo);
+		return ;
 	}
+	routine_util(philo);
 }
 
 void	dinner_start(t_table *data)

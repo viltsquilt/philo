@@ -6,7 +6,7 @@
 /*   By: vahdekiv <vahdekiv@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/15 11:31:38 by vahdekiv          #+#    #+#             */
-/*   Updated: 2025/11/04 18:04:19 by vahdekiv         ###   ########.fr       */
+/*   Updated: 2025/11/10 13:51:10 by vahdekiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,5 @@ void	cleanup(t_table *table, int count)
 		free(table->philos);
 	if (table->forks)
 		free(table->forks);
-	printf("Simulation ended\n");
 	exit(0);
 }
